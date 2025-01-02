@@ -21,7 +21,25 @@ function getCellColor(neighbors) {
     return COLORS[4];
 }
 
-// ...existing code for togglePlay, reset, resizeCanvas, initGrid...
+function togglePlay() {
+    isPlaying = !isPlaying;
+    playButton.textContent = isPlaying ? 'Pause' : 'Play';
+    if (isPlaying) gameLoop();
+}
+
+function reset() {
+    isPlaying = false;
+    playButton.textContent = 'Play';
+    initGrid();
+    drawGrid();
+}
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initGrid();
+    drawGrid();
+}
 
 function initGrid() {
     const cols = Math.floor(canvas.width / cellSize);
@@ -35,7 +53,43 @@ function initGrid() {
     updateNeighborCounts();
 }
 
-// ...existing code for updateNeighborCounts, drawGrid, countNeighbors...
+function updateNeighborCounts() {
+    for (let y = 0; y < grid.length; y++) {
+        for (let x = 0; x < grid[y].length; x++) {
+            if (grid[y][x].alive) {
+                grid[y][x].neighbors = countNeighbors(x, y);
+            }
+        }
+    }
+}
+
+function drawGrid() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let y = 0; y < grid.length; y++) {
+        for (let x = 0; x < grid[y].length; x++) {
+            if (grid[y][x].alive) {
+                ctx.fillStyle = getCellColor(grid[y][x].neighbors);
+                ctx.beginPath();
+                ctx.roundRect(x * cellSize, y * cellSize, 
+                    cellSize - 1, cellSize - 1, cellRadius);
+                ctx.fill();
+            }
+        }
+    }
+}
+
+function countNeighbors(x, y) {
+    let count = 0;
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+            if (i === 0 && j === 0) continue;
+            const row = (y + i + grid.length) % grid.length;
+            const col = (x + j + grid[0].length) % grid[0].length;
+            if (grid[row][col].alive) count++;
+        }
+    }
+    return count;
+}
 
 function updateGrid() {
     const newGrid = grid.map((row, y) =>
@@ -76,6 +130,8 @@ playButton.addEventListener('click', togglePlay);
 resetButton.addEventListener('click', reset);
 window.addEventListener('resize', resizeCanvas);
 
-// Initialize
-resizeCanvas();
-drawGrid();
+// Initialize after DOM is fully loaded
+window.addEventListener('DOMContentLoaded', () => {
+    resizeCanvas();
+    drawGrid();
+});
