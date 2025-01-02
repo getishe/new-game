@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Life</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div class="controls">
-        <button id="playButton">Play</button>
-        <button id="resetButton">Reset</button>
-    </div>
-    <canvas id="gameCanvas"></canvas>
-              
+    <main class="game-container">
+        <!-- Game Controls -->
+        <div class="controls">
+            <button id="playButton" class="control-btn">Play</button>
+            <button id="resetButton" class="control-btn">Reset</button>
+        </div>
+        
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas" aria-label="Game Area"></canvas>
+    </main>
+    
     <script src="game.js"></script>
 </body>
 </html>
