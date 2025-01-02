@@ -1,33 +1,45 @@
+:root {
+    --color-primary: #216e39;
+    --color-primary-hover: #30a14e;
+    --spacing-base: 20px;
+    --button-padding: 8px 16px;
+    --border-radius: 6px;
+}
+
+/* Reset styles */
 body {
     margin: 0;
     overflow: hidden;
     background: black;
 }
 
+/* Canvas styles */
 canvas {
     display: block;
 }
 
+/* Control panel */
 .controls {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: var(--spacing-base);
+    left: var(--spacing-base);
     z-index: 100;
     display: flex;
-    gap: 10px;
+    gap: calc(var(--spacing-base) / 2);
 }
 
-button {
-    padding: 8px 16px;
+/* Button styles */
+.controls button {
+    padding: var(--button-padding);
     border: none;
-    border-radius: 6px;
-    background: #216e39;
+    border-radius: var(--border-radius);
+    background: var(--color-primary);
     color: white;
     cursor: pointer;
     font-family: -apple-system, system-ui, "Segoe UI";
-    transition: background 0.2s;
+    transition: background 0.2s ease;
 }
 
-button:hover {
-    background: #30a14e;
+.controls button:hover {
+    background: var(--color-primary-hover);
 }
